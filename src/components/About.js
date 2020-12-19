@@ -1,62 +1,31 @@
-import React, { Component } from 'react'
-import { Container, Divider, Switch } from '@material-ui/core'
+import React from 'react'
+import { Card, CardContent, CardActions, Divider } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 
-class About extends Component {
-    state = {
-        checked: true,
-        heading: 'About FakeCars.com'
-    }
 
-    toggleSwitch = () => {
-        const newVal = !this.state.checked
-        if (newVal) {
-            return this.setState({
-                heading: 'About FakeCars.com',
-                checked: newVal
-            })
-        }
-        return this.setState({
-            heading: 'About Cars.com',
-            checked: newVal
-        })
-    }
+const Home = (props) => {
+    return (
+        <div className="card-container">
 
-    render() {
-        return (
-            <div className="text-gray">
-                <Container maxWidth="sm">
-                    <h1 style={{ textAlign: 'center' }}>{this.state.heading}</h1>
-                    <p>
-                        FakeCars.com was created to solve a specific problem.
-                        That problem is quick and reliable access to details 
-                        about many different models, all in one place. We had
-                        to use the word "Fake" in our name so that we don't 
-                        get sued by the real&nbsp; 
-                        <a style={{ color: 'mediumblue' }}
-                        href="https://www.cars.com"
-                        target="_blank">Cars.com</a>
-                        &nbsp;but we won't worry too much about that. We've provided a 
-                        link to the actual cars.com above and we did not 
-                        receive any money from them to do so. Although, there's 
-                        an argument that maybe we should since we are a top-notch
-                        coding bootcamp and anyone would want to be associated with
-                        us :)
-                    </p>
+            {props.cars.map((car, idx) => (
+                <Card key={idx} className="card">
+                    <CardContent className="text-gray">
+                        <span>{car.Name.toUpperCase()}</span>
+                        <ul>
+                            <li>Miles_per_Gallon: {car["Miles_per_Gallon"]}</li>
+                            <li>Cylinders: {car["Cylinders"]}</li>
+                            <li>Displacement: {car["Displacement"]}</li>
+                            <li>Horsepower: {car["Horsepower"]}</li>
+                        </ul>
+                    </CardContent>
                     <Divider />
-                    <p>
-                        If you'd like you can toggle the word "Fake" because
-                        why not? We have the potential to be the real cars.com 
-                        if we wanted to be.
-                    </p>
-                    <Switch
-                        checked={this.state.checked}
-                        color="primary"
-                        onChange={this.toggleSwitch}
-                    />
-                </Container>
-            </div>
-        )
-    }
+                    <CardActions style={{ color: 'mediumblue' }}>
+                        <Link to={`/car/${car.id}`}>See More Details</Link>
+                    </CardActions>
+                </Card>
+            ))}
+        </div>
+    )
 }
 
-export default About
+export default Home
